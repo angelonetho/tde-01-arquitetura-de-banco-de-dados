@@ -102,6 +102,36 @@ def create_ticket(ticket_type_id, customer_id):
     session.add(new_ticket)
     session.commit()
 
+def get_all_employees():
+    return session.query(Employee).all()
+
+def get_employee_by_id(employee_id):
+    return session.query(Employee).where(Employee.id == employee_id).first()
+
+def get_all_customers():
+    return session.query(Customer).all()
+
+def get_customer_by_id(customer_id):
+    return session.query(Customer).where(Customer.id == customer_id).first()
+
+def get_all_events():
+    return session.query(Event).all()
+
+def get_event_by_id(event_id):
+    return session.query(Event).where(Event.id == event_id).first()
+
+def get_all_ticket_types():
+    return session.query(TicketType).all()
+
+def get_ticket_type_by_id(ticket_type_id):
+    return session.query(TicketType).where(TicketType.id == ticket_type_id).first()
+
+def get_all_tickets():
+    return session.query(Ticket).all()
+
+def get_ticket_by_id(ticket_id):
+    return session.query(Ticket).where(Ticket.id == ticket_id).first()
+
 create_employee("Angelo", "09944779962")
 
 create_customer("Maria Clara", "03344669972", "maria.clara@example.com", "password", date(1994, 1, 18))
@@ -116,6 +146,12 @@ ticket_type = session.query(TicketType).first()
 
 customer = session.query(Customer).first()
 
-create_ticket(ticket_type.id, customer)
+create_ticket(ticket_type.id, customer.id)
+
+print(get_all_customers())
+print(get_all_employees())
+print(get_all_events())
+print(get_all_ticket_types())
+print(get_all_tickets())
 
 session.close()
