@@ -1,4 +1,3 @@
-import uuid
 from datetime import date
 from datetime import datetime
 
@@ -9,35 +8,11 @@ from db.models.ticket_types import TicketType
 from db.models.tickets import Ticket
 from db.connection import get_session, create_tables
 
+from use_cases import register_customer, register_employee, register_event, register_ticket, register_ticket_type
+
 create_tables()
 
 session = get_session()
-
-
-def create_employee(name, cpf):
-    new_employee = Employee(name=name, cpf=cpf)
-    session.add(new_employee)
-    session.commit()
-
-def create_customer(name, cpf, email, password, birth_date):
-    new_customer = Customer(name=name, cpf=cpf, email=email, password=password, birth_date=birth_date)
-    session.add(new_customer)
-    session.commit()
-
-def create_event(name, description, avenue, event_time):
-    new_event = Event(name=name, description=description, avenue=avenue, event_time=event_time)
-    session.add(new_event)
-    session.commit()
-
-def create_ticket_type(name, description, price, event_id):
-    new_ticket_type = TicketType(name=name, description=description, price=price, event_id=event_id)
-    session.add(new_ticket_type)
-    session.commit()
-
-def create_ticket(ticket_type_id, customer_id):
-    new_ticket = Ticket(ticket_type_id=ticket_type_id, customer_id=customer_id)
-    session.add(new_ticket)
-    session.commit()
 
 def get_all_employees():
     return session.query(Employee).all()
@@ -69,21 +44,21 @@ def get_all_tickets():
 def get_ticket_by_id(ticket_id):
     return session.query(Ticket).where(Ticket.id == ticket_id).first()
 
-create_employee("Angelo", "09944779962")
+register_employee.execute("Angelo", "09944779962")
 
-create_customer("Maria Clara", "03344669972", "maria.clara@example.com", "password", date(1994, 1, 18))
+register_customer.execute("Maria Clara", "03344669972", "maria.clara@example.com", "password", date(1994, 1, 18))
 
-create_event("Ready To Be", "Twice Concert", "Allianz Parque", datetime.now())
+register_event.execute("Ready To Be", "Twice Concert", "Allianz Parque", datetime.now())
 
 event = session.query(Event).first()
 
-create_ticket_type("PISTA", "Setor da PISTA", "450", event.id)
+register_ticket_type.execute("PISTA", "Setor da PISTA", "450", event.id)
 
 ticket_type = session.query(TicketType).first()
 
 customer = session.query(Customer).first()
 
-create_ticket(ticket_type.id, customer.id)
+register_ticket.execute(ticket_type.id, customer.id)
 
 print(get_all_customers())
 print(get_all_employees())
