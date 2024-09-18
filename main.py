@@ -2,80 +2,17 @@ import uuid
 from datetime import date
 from datetime import datetime
 
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-from sqlalchemy import func, create_engine, Column, String, Date, TIMESTAMP, DECIMAL, ForeignKey
+from db.models.customers import Customer
+from db.models.employees import Employee
+from db.models.events import Event
+from db.models.ticket_types import TicketType
+from db.models.tickets import Ticket
+from db.connection import get_session, create_tables
 
-Base = declarative_base()
+create_tables()
 
-class Customer(Base):
-    __tablename__ = "customers"
+session = get_session()
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String, nullable=False)
-    cpf = Column(String(11), nullable=False, unique=True)
-    email = Column(String, nullable=False, unique=True)
-    phone_number = Column(String(45), unique=True)
-    password = Column(String, nullable=False)
-    birth_date = Column(Date, nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False, default=func.now())
-
-    tickets = relationship('Ticket', back_populates='customer')
-
-class Employee(Base):
-    __tablename__ = "employees"
-
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String, nullable=False)
-    cpf = Column(String(11), nullable=False, unique=True)
-
-    tickets = relationship('Ticket', back_populates='employee')
-
-class Event(Base):
-    __tablename__ = "events"
-
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String, nullable=False)
-    description = Column(String, nullable=False)
-    avenue = Column(String, nullable=False)
-    event_time = Column(TIMESTAMP, nullable=False)
-
-    ticket_types = relationship('TicketType', back_populates='event')
-
-class TicketType(Base):
-    __tablename__ = "ticket_types"
-
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String, nullable=False)
-    description = Column(String, nullable=False)
-    price = Column(DECIMAL(10,2), nullable=False)
-
-    event_id = Column(String(36), ForeignKey('events.id'), nullable=False)
-
-    event = relationship('Event', back_populates='ticket_types')
-    tickets = relationship('Ticket', back_populates='ticket_type')
-
-class Ticket(Base):
-    __tablename__ = "tickets"
-    
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    created_at = Column(TIMESTAMP, nullable=False, default=func.now())
-    validated_at = Column(TIMESTAMP)
-
-    ticket_type_id = Column(String(36), ForeignKey('ticket_types.id'), nullable=False)
-    customer_id = Column(String(36), ForeignKey('customers.id'), nullable=False)
-    employee_id = Column(String(36), ForeignKey('employees.id'))
-
-    ticket_type = relationship("TicketType", back_populates="tickets")
-    customer = relationship("Customer", back_populates="tickets")
-    employee = relationship("Employee", back_populates="tickets")
-    
-engine = create_engine("sqlite:///harutickets.db")
-
-Base.metadata.create_all(engine)
-
-Session = sessionmaker()
-Session.configure(bind=engine)
-session = Session()
 
 def create_employee(name, cpf):
     new_employee = Employee(name=name, cpf=cpf)
