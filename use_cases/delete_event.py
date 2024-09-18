@@ -5,10 +5,12 @@ session = get_session()
 
 def execute(event_id):
     try:
-        event = session.delete(Event).where(Event.id == event_id).first()
+        event = session.query(Event).where(Event.id == event_id).first()
 
-        if event == None:
+        if event is None:
             return 'Event not found.'
+        
+        session.delete(event)
 
         session.commit()
     finally:

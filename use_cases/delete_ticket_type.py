@@ -5,10 +5,12 @@ session = get_session()
 
 def execute(ticket_type_id):
     try:
-        ticket_type = session.delete(TicketType).where(TicketType.id == ticket_type_id).first()
+        ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
-        if ticket_type == None:
+        if ticket_type is None:
             return 'Ticket type not found.'
+        
+        session.delete(ticket_type)
 
         session.commit()
     finally:

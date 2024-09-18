@@ -5,10 +5,12 @@ session = get_session()
 
 def execute(customer_id):
     try:
-        customer = session.delete(Customer).where(Customer.id == customer_id).first()
+        customer = session.query(Customer).where(Customer.id == customer_id).first()
 
-        if customer == None:
+        if customer is None:
             return 'Customer not found.'
+
+        session.delete(customer)
 
         session.commit()
     finally:

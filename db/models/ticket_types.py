@@ -12,7 +12,7 @@ class TicketType(Base):
     description = Column(String, nullable=False)
     price = Column(DECIMAL(10,2), nullable=False)
 
-    event_id = Column(String(36), ForeignKey('events.id'), nullable=False)
+    event_id = Column(String(36), ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
 
     event = relationship('Event', back_populates='ticket_types')
-    tickets = relationship('Ticket', back_populates='ticket_type')
+    tickets = relationship('Ticket', back_populates='ticket_type', cascade='all, delete')

@@ -13,4 +13,4 @@ class Event(Base):
     avenue = Column(String, nullable=False)
     event_time = Column(TIMESTAMP, nullable=False)
 
-    ticket_types = relationship('TicketType', back_populates='event')
+    ticket_types = relationship('TicketType', back_populates='event', cascade='all, delete')

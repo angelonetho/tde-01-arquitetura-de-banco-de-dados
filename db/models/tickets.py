@@ -11,9 +11,9 @@ class Ticket(Base):
     created_at = Column(TIMESTAMP, nullable=False, default=func.now())
     validated_at = Column(TIMESTAMP)
 
-    ticket_type_id = Column(String(36), ForeignKey('ticket_types.id'), nullable=False)
-    customer_id = Column(String(36), ForeignKey('customers.id'), nullable=False)
-    employee_id = Column(String(36), ForeignKey('employees.id'))
+    ticket_type_id = Column(String(36), ForeignKey('ticket_types.id', ondelete='CASCADE'), nullable=False)
+    customer_id = Column(String(36), ForeignKey('customers.id', ondelete='SET NULL'))
+    employee_id = Column(String(36), ForeignKey('employees.id', ondelete='SET NULL'))
 
     ticket_type = relationship("TicketType", back_populates="tickets")
     customer = relationship("Customer", back_populates="tickets")

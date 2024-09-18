@@ -5,10 +5,12 @@ session = get_session()
 
 def execute(employee_id):
     try:
-        employee = session.delete(Employee).where(Employee.id == employee_id).first()
+        employee = session.query(Employee).where(Employee.id == employee_id).first()
 
-        if employee == None:
+        if employee is None:
             return 'Employee not found.'
+        
+        session.delete(employee)
 
         session.commit()
     finally:
