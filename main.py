@@ -8,7 +8,7 @@ from db.models.ticket_types import TicketType
 from db.models.tickets import Ticket
 from db.connection import get_session, create_tables
 
-from use_cases import delete_customer, delete_employee, delete_event, delete_ticket, delete_ticket_type, edit_customer, fetch_customers, fetch_employees, fetch_events, fetch_ticket_types_by_event_id, fetch_tickets_by_customer_id, fetch_tickets_by_ticket_type_id, register_customer, register_employee, register_event, register_ticket, register_ticket_type
+from use_cases import delete_customer, delete_employee, delete_event, delete_ticket, delete_ticket_type, edit_customer, fetch_customers, fetch_employees, fetch_events, fetch_ticket_types_by_event_id, fetch_tickets_by_customer_id, fetch_tickets_by_ticket_type_id, register_customer, register_employee, register_event, register_ticket, register_ticket_type, validate_ticket
 
 create_tables()
 
@@ -44,5 +44,7 @@ print(edit_customer.execute(customer_id=customer.id, name="Maria Clara H"))
 #delete_ticket.execute(ticket_id=ticket.id)
 #delete_ticket_type.execute(ticket_type_id=ticket_type.id)
 #delete_event.execute(event_id=event.id)
+
+validate_ticket.execute(employee_id=employee.id, ticket_id=ticket.id)
 
 session.close()
