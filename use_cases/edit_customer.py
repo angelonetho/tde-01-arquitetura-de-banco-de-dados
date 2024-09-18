@@ -8,7 +8,7 @@ def execute(customer_id, name=None, email=None, phone_number=None, birth_date=No
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
         if customer == None:
-            return 'Customer not found'
+            return 'Customer not found.'
         
         if name != None:
             customer.name = name
