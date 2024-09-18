@@ -6,6 +6,10 @@ session = get_session()
 def execute(ticket_id):
     try:
         ticket = session.query(Ticket).where(Ticket.id == ticket_id).first()
+
+        if ticket == None:
+            return 'Ticket not found.'
+
         return ticket
     finally:
         session.close()
