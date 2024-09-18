@@ -8,7 +8,7 @@ from db.models.ticket_types import TicketType
 from db.models.tickets import Ticket
 from db.connection import get_session, create_tables
 
-from use_cases import fetch_customers, fetch_employees, fetch_events, register_customer, register_employee, register_event, register_ticket, register_ticket_type
+from use_cases import edit_customer, fetch_customers, fetch_employees, fetch_events, register_customer, register_employee, register_event, register_ticket, register_ticket_type
 
 create_tables()
 
@@ -33,5 +33,7 @@ register_ticket.execute(ticket_type.id, customer.id)
 print(fetch_customers.execute())
 print(fetch_employees.execute())
 print(fetch_events.execute())
+
+print(edit_customer.execute(customer_id=customer.id, name="Maria Clara H"))
 
 session.close()
