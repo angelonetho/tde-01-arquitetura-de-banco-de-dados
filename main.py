@@ -16,7 +16,7 @@ session = get_session()
 
 register_employee.execute("Angelo", "09944779962")
 
-register_customer.execute("Maria Clara", "03344669972", "maria.clara@example.com", "password", date(1994, 1, 18))
+print(register_customer.execute("Maria Clara", "03344669972", "maria.clara@example.com", "password", date(1994, 1, 18)))
 
 register_event.execute("Ready To Be", "Twice Concert", "Allianz Parque", datetime.now())
 

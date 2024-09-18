@@ -8,5 +8,7 @@ def execute(name, description, avenue, event_time):
         new_event = Event(name=name, description=description, avenue=avenue, event_time=event_time)
         session.add(new_event)
         session.commit()
+
+        return new_event
     finally:
         session.close()
