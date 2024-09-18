@@ -8,14 +8,14 @@ def execute(ticket_id, ticket_type_id=None):
     try:
         ticket = session.query(Ticket).where(Ticket.id == ticket_id).first()
 
-        if ticket == None:
+        if not ticket:
             return 'Ticket not found.'
 
-        if ticket_type_id != None:
+        if ticket_type_id:
 
             ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
-            if ticket_type == None: return 'Ticket type not found.'
+            if not ticket_type: return 'Ticket type not found.'
 
             ticket.ticket_type_id = ticket_type_id
 

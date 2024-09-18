@@ -7,7 +7,7 @@ def execute(employee_id):
     try:
         employee = session.query(Employee).where(Employee.id == employee_id).first()
 
-        if employee == None:
+        if not employee:
             return 'Employee not found.'
 
         return employee

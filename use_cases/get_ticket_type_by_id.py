@@ -7,7 +7,7 @@ def execute(ticket_type_id):
     try:
         ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
-        if ticket_type == None:
+        if not ticket_type:
             return 'Ticket type not found.'
 
         return ticket_type

@@ -7,16 +7,16 @@ def execute(ticket_type_id, name=None, description=None, price=None):
     try:
         ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
-        if ticket_type == None:
+        if not ticket_type:
             return 'Ticket type not found.'
 
-        if name != None:
+        if name:
             ticket_type.name = name
 
-        if description != None:
+        if description:
             ticket_type.description = description
 
-        if price != None:
+        if price:
             ticket_type.price = price
 
         session.commit()

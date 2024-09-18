@@ -7,10 +7,10 @@ def execute(employee_id, name=None):
     try:
         employee = session.query(Employee).where(Employee.id == employee_id).first()
 
-        if employee == None:
+        if not employee:
             return 'Employee not found.'
 
-        if name != None:
+        if name:
             employee.name = name
 
         session.commit()

@@ -7,7 +7,7 @@ def execute(event_id):
     try:
         event = session.query(Event).where(Event.id == event_id).first()
 
-        if event == None:
+        if not event:
             return 'Event not found.'
 
         return event

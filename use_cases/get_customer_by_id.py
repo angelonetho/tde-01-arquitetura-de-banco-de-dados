@@ -7,7 +7,7 @@ def execute(customer_id):
     try:
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
-        if customer == None:
+        if not customer:
             return 'Customer not found.'
 
         return customer

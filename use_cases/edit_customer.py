@@ -7,19 +7,19 @@ def execute(customer_id, name=None, email=None, phone_number=None, birth_date=No
     try:
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
-        if customer == None:
+        if not customer:
             return 'Customer not found.'
         
-        if name != None:
+        if name:
             customer.name = name
 
-        if email != None:
+        if email:
             customer.email = email
 
-        if phone_number != None:
+        if phone_number:
             customer.phone_number = phone_number
 
-        if birth_date != None:
+        if birth_date:
             customer.name = birth_date
 
         session.commit()

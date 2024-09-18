@@ -7,19 +7,19 @@ def execute(event_id, name=None, description=None, avenue=None, event_time=None)
     try:
         event = session.query(Event).where(Event.id == event_id).first()
 
-        if event == None:
+        if not event:
             return 'Event not found.'
 
-        if name != None:
+        if name:
             event.name = name
 
-        if description != None:
+        if description:
             event.description = description
 
-        if avenue != None:
+        if avenue:
             event.avenue = avenue
 
-        if event_time != None:
+        if event_time:
             event.event_time = event_time
 
         session.commit()
