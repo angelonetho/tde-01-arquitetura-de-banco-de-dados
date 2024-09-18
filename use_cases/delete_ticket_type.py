@@ -1,0 +1,16 @@
+from db.connection import get_session
+from db.models.ticket_types import TicketType
+
+session = get_session()
+
+def execute(ticket_type_id):
+    try:
+        ticket_type = session.delete(TicketType).where(TicketType.id == ticket_type_id).first()
+
+        if ticket_type == None:
+            return 'Ticket type not found.'
+
+        session.commit()
+    finally:
+        session.close()
+    
