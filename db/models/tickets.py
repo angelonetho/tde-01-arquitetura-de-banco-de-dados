@@ -18,3 +18,13 @@ class Ticket(Base):
     ticket_type = relationship("TicketType", back_populates="tickets")
     customer = relationship("Customer", back_populates="tickets")
     employee = relationship("Employee", back_populates="tickets")
+
+    def __repr__(self):
+        return "<Ticket(id='%s', created_at='%s', validated_at='%s', ticket_type_id='%s', customer_id='%s', employee_id='%s')>" % (
+            self.id,
+            self.created_at,
+            self.validated_at,
+            self.ticket_type_id,
+            self.customer_id,
+            self.employee_id,
+        )

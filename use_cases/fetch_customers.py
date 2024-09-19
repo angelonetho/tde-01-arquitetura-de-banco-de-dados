@@ -1,10 +1,10 @@
 from db.connection import get_session
-from db.models.ticket_types import TicketType
+from db.models.customers import Customer
 
 session = get_session()
 
 def execute():
     try:
-        return session.query(TicketType).all()
+        return session.query(Customer).all()
     finally:
         session.close()

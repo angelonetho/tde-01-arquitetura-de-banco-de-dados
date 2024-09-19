@@ -18,3 +18,12 @@ class Customer(Base):
     created_at = Column(TIMESTAMP, nullable=False, default=func.now())
 
     tickets = relationship('Ticket', back_populates='customer')
+
+    def __repr__(self):
+        return "<Customer(id='%s', name='%s', cpf='%s', email='%s', phone_number='%s')>" % (
+            self.id,
+            self.name,
+            self.cpf,
+            self.email,
+            self.phone_number,
+        )

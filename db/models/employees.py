@@ -12,3 +12,10 @@ class Employee(Base):
     cpf = Column(String(11), nullable=False, unique=True)
 
     tickets = relationship('Ticket', back_populates='employee')
+
+    def __repr__(self):
+        return "<Employee(id='%s', name='%s', cpf='%s')>" % (
+            self.id,
+            self.name,
+            self.cpf,
+        )

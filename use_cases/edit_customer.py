@@ -20,7 +20,7 @@ def execute(customer_id, name=None, email=None, phone_number=None, birth_date=No
             customer.phone_number = phone_number
 
         if birth_date:
-            customer.name = birth_date
+            customer.birth_date = birth_date
 
         session.commit()
 

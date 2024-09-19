@@ -14,3 +14,12 @@ class Event(Base):
     event_time = Column(TIMESTAMP, nullable=False)
 
     ticket_types = relationship('TicketType', back_populates='event', cascade='all, delete')
+
+    def __repr__(self):
+        return "<Event(id='%s', name='%s', description='%s', avenue='%s', event_time='%s')>" % (
+            self.id,
+            self.name,
+            self.description,
+            self.avenue,
+            self.event_time,
+        )

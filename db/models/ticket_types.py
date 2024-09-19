@@ -16,3 +16,12 @@ class TicketType(Base):
 
     event = relationship('Event', back_populates='ticket_types')
     tickets = relationship('Ticket', back_populates='ticket_type', cascade='all, delete')
+
+    def __repr__(self):
+        return "<TicketType(id='%s', name='%s', description='%s', price='%s', event_id='%s')>" % (
+            self.id,
+            self.name,
+            self.description,
+            self.price,
+            self.event_id,
+        )
