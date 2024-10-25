@@ -9,7 +9,7 @@ def execute(ticket_type_id):
         ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
         if not ticket_type:
-            return 'Ticket type not found.'
+            raise Exception('Ticket type not found.')
 
         return session.query(Ticket).where(Ticket.ticket_type_id == ticket_type_id).all()
     finally:

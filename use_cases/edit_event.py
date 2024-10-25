@@ -8,7 +8,7 @@ def execute(event_id, name=None, description=None, avenue=None, event_time=None)
         event = session.query(Event).where(Event.id == event_id).first()
 
         if not event:
-            return 'Event not found.'
+            raise Exception('Event not found.')
 
         if name:
             event.name = name

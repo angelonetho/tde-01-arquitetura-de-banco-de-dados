@@ -8,7 +8,7 @@ def execute(employee_id, name=None):
         employee = session.query(Employee).where(Employee.id == employee_id).first()
 
         if not employee:
-            return 'Employee not found.'
+            raise Exception('Employee not found.')
 
         if name:
             employee.name = name

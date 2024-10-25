@@ -9,7 +9,7 @@ def execute(name, description, price, event_id):
         event = session.query(Event).where(Event.id == event_id).first()
 
         if not event:
-            return 'Event not found.'
+            raise Exception('Event not found.')
 
         new_ticket_type = TicketType(name=name, description=description, price=price, event_id=event_id)
         

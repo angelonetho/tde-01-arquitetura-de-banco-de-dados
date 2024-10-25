@@ -11,12 +11,12 @@ def execute(ticket_type_id, customer_id):
         ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
         if not ticket_type:
-            return 'Ticket Type not found.'
+            raise Exception('Ticket Type not found.')
         
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
         if not customer:
-            return 'Customer not found.'
+            raise Exception('Customer not found.')
 
         new_ticket = Ticket(ticket_type_id=ticket_type_id, customer_id=customer_id)
 

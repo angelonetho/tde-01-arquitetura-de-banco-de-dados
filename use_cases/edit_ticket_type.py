@@ -8,7 +8,7 @@ def execute(ticket_type_id, name=None, description=None, price=None):
         ticket_type = session.query(TicketType).where(TicketType.id == ticket_type_id).first()
 
         if not ticket_type:
-            return 'Ticket type not found.'
+            raise Exception('Ticket type not found.')
 
         if name:
             ticket_type.name = name

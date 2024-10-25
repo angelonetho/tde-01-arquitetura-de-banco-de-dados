@@ -8,7 +8,7 @@ def execute(customer_id):
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
         if not customer:
-            return 'Customer not found.'
+            raise Exception('Customer not found.')
 
         return customer
     finally:

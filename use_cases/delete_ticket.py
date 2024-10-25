@@ -8,7 +8,7 @@ def execute(ticket_id):
         ticket = session.query(Ticket).where(Ticket.id == ticket_id).first()
 
         if ticket is None:
-            return 'Ticket not found.'
+            raise Exception('Ticket not found.')
 
         session.delete(ticket)
 

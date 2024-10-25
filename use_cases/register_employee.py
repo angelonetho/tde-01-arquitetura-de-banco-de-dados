@@ -8,7 +8,7 @@ def execute(name, cpf):
         employee = session.query(Employee).where(Employee.cpf == cpf).first()
 
         if employee:
-            return 'Employee with same CPF already exists.'
+            raise Exception('Employee with same CPF already exists.')
 
         new_employee = Employee(name=name, cpf=cpf)
         session.add(new_employee)

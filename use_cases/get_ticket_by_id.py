@@ -8,7 +8,7 @@ def execute(ticket_id):
         ticket = session.query(Ticket).where(Ticket.id == ticket_id).first()
 
         if not ticket:
-            return 'Ticket not found.'
+            raise Exception('Ticket not found.')
 
         return ticket
     finally:
