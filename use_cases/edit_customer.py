@@ -3,13 +3,14 @@ from db.models.customers import Customer
 
 session = get_session()
 
+
 def execute(customer_id, name=None, email=None, phone_number=None, birth_date=None):
     try:
         customer = session.query(Customer).where(Customer.id == customer_id).first()
 
         if not customer:
-            raise Exception('Customer not found.')
-        
+            raise Exception("Customer not found.")
+
         if name:
             customer.name = name
 
@@ -27,4 +28,3 @@ def execute(customer_id, name=None, email=None, phone_number=None, birth_date=No
         return customer
     finally:
         session.close()
-    
