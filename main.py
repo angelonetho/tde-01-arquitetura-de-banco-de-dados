@@ -37,11 +37,14 @@ from controllers import (
     register_event,
     register_ticket_type,
     validate_ticket,
+    fetch_tickets_by_event_id,
+    get_total_revenue_by_event_id,
 )
 
 from db.connection import create_tables
 
 create_tables()
+
 
 class CreateOperationsWindow(QMainWindow):
     def __init__(self):
@@ -125,6 +128,12 @@ class ReadOperationsWindow(QMainWindow):
         self.btn_fetch_tickets_by_ticket_type_id = QPushButton(
             "Buscar Ingressos por Tipo de Ingresso"
         )
+        self.btn_fetch_tickets_by_event_id = QPushButton(
+            "Buscar todos os Ingressos de um evento"
+        )
+        self.btn_get_total_revenue_by_event_id = QPushButton(
+            "Faturamento total de um evento"
+        )
 
         self.btn_get_customer_by_id.clicked.connect(self.handle_get_customer_by_id)
         self.btn_get_employee_by_id.clicked.connect(self.handle_get_employee_by_id)
@@ -145,6 +154,12 @@ class ReadOperationsWindow(QMainWindow):
         self.btn_fetch_tickets_by_ticket_type_id.clicked.connect(
             self.handle_fetch_tickets_by_ticket_type_id
         )
+        self.btn_fetch_tickets_by_event_id.clicked.connect(
+            self.handle_fetch_tickets_by_event_id
+        )
+        self.btn_get_total_revenue_by_event_id.clicked.connect(
+            self.handle_get_total_revenue_by_event_id
+        )
 
         layout.addWidget(self.btn_get_customer_by_id)
         layout.addWidget(self.btn_get_employee_by_id)
@@ -157,6 +172,8 @@ class ReadOperationsWindow(QMainWindow):
         layout.addWidget(self.btn_fetch_ticket_types_by_event_id)
         layout.addWidget(self.btn_fetch_tickets_by_customer_id)
         layout.addWidget(self.btn_fetch_tickets_by_ticket_type_id)
+        layout.addWidget(self.btn_fetch_tickets_by_event_id)
+        layout.addWidget(self.btn_get_total_revenue_by_event_id)
 
         self.setMinimumSize(64 * 8, 6 * 8)
 
@@ -206,10 +223,18 @@ class ReadOperationsWindow(QMainWindow):
         self.new_window = fetch_tickets_by_customer_id.FetchTicketsByCustomerIdWindow()
         self.new_window.show()
 
+    def handle_fetch_tickets_by_event_id(self):
+        self.new_window = fetch_tickets_by_event_id.FetchTicketsByEventIdWindow()
+        self.new_window.show()
+
     def handle_fetch_tickets_by_ticket_type_id(self):
         self.new_window = (
             fetch_tickets_by_ticket_type_id.FetchTicketsByTicketTypeIdWindow()
         )
+        self.new_window.show()
+
+    def handle_get_total_revenue_by_event_id(self):
+        self.new_window = get_total_revenue_by_event_id.GetTotalRevenueByEventIdWindow()
         self.new_window.show()
 
 

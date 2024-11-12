@@ -15,7 +15,9 @@ def execute(ticket_id, ticket_type_id=None):
 
             if ticket_type_id:
                 ticket_type = (
-                    session.query(TicketType).where(TicketType.id == ticket_type_id).first()
+                    session.query(TicketType)
+                    .where(TicketType.id == ticket_type_id)
+                    .first()
                 )
 
                 if not ticket_type:

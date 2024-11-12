@@ -5,6 +5,7 @@ from db.models.customers import Customer
 
 session = get_session()
 
+
 def execute(ticket_type_id, customer_id):
     try:
         with session.begin():

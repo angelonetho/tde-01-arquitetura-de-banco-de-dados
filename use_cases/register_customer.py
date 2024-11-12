@@ -17,7 +17,11 @@ def execute(name, cpf, email, password, birth_date):
                 raise Exception("Customer with same e-mail or CPF already exists.")
 
             new_customer = Customer(
-                name=name, cpf=cpf, email=email, password=password, birth_date=birth_date
+                name=name,
+                cpf=cpf,
+                email=email,
+                password=password,
+                birth_date=birth_date,
             )
             session.add(new_customer)
 
