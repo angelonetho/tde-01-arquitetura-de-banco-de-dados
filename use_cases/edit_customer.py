@@ -6,25 +6,31 @@ session = get_session()
 
 def execute(customer_id, name=None, email=None, phone_number=None, birth_date=None):
     try:
-        customer = session.query(Customer).where(Customer.id == customer_id).first()
+        with session.begin():
+            customer = session.query(Customer).where(Customer.id == customer_id).first()
 
-        if not customer:
-            raise Exception("Customer not found.")
+            if not customer:
+                raise Exception("Customer not found.")
 
-        if name:
-            customer.name = name
+            if name:
+                customer.name = name
 
-        if email:
-            customer.email = email
+            if email:
+                customer.email = email
 
-        if phone_number:
-            customer.phone_number = phone_number
+            if phone_number:
+                customer.phone_number = phone_number
 
-        if birth_date:
-            customer.birth_date = birth_date
+            if birth_date:
+                customer.birth_date = birth_date
 
-        session.commit()
+            session.commit()
 
         return customer
+
+    except Exception as exception:
+        session.rollback()
+        raise exception
+
     finally:
         session.close()

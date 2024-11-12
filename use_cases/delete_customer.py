@@ -6,13 +6,19 @@ session = get_session()
 
 def execute(customer_id):
     try:
-        customer = session.query(Customer).where(Customer.id == customer_id).first()
+        with session.begin():
+            customer = session.query(Customer).where(Customer.id == customer_id).first()
 
-        if customer is None:
-            raise Exception("Customer not found.")
+            if customer is None:
+                raise Exception("Customer not found.")
 
-        session.delete(customer)
+            session.delete(customer)
 
-        session.commit()
+            session.commit()
+
+    except Exception as exception:
+        session.rollback()
+        raise exception
+
     finally:
         session.close()

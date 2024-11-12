@@ -6,12 +6,20 @@ session = get_session()
 
 def execute(name, description, avenue, event_time):
     try:
-        new_event = Event(
-            name=name, description=description, avenue=avenue, event_time=event_time
-        )
-        session.add(new_event)
-        session.commit()
+        with session.begin():
+
+            new_event = Event(
+                name=name, description=description, avenue=avenue, event_time=event_time
+            )
+            session.add(new_event)
+
+            session.commit()
 
         return new_event
+
+    except Exception as exception:
+        session.rollback()
+        raise exception
+
     finally:
         session.close()

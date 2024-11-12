@@ -6,24 +6,30 @@ session = get_session()
 
 def execute(ticket_type_id, name=None, description=None, price=None):
     try:
-        ticket_type = (
-            session.query(TicketType).where(TicketType.id == ticket_type_id).first()
-        )
+        with session.begin():
+            ticket_type = (
+                session.query(TicketType).where(TicketType.id == ticket_type_id).first()
+            )
 
-        if not ticket_type:
-            raise Exception("Ticket type not found.")
+            if not ticket_type:
+                raise Exception("Ticket type not found.")
 
-        if name:
-            ticket_type.name = name
+            if name:
+                ticket_type.name = name
 
-        if description:
-            ticket_type.description = description
+            if description:
+                ticket_type.description = description
 
-        if price:
-            ticket_type.price = price
+            if price:
+                ticket_type.price = price
 
-        session.commit()
+            session.commit()
 
         return ticket_type
+
+    except Exception as exception:
+        session.rollback()
+        raise exception
+
     finally:
         session.close()

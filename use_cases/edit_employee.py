@@ -6,16 +6,22 @@ session = get_session()
 
 def execute(employee_id, name=None):
     try:
-        employee = session.query(Employee).where(Employee.id == employee_id).first()
+        with session.begin():
+            employee = session.query(Employee).where(Employee.id == employee_id).first()
 
-        if not employee:
-            raise Exception("Employee not found.")
+            if not employee:
+                raise Exception("Employee not found.")
 
-        if name:
-            employee.name = name
+            if name:
+                employee.name = name
 
-        session.commit()
+            session.commit()
 
         return employee
+
+    except Exception as exception:
+        session.rollback()
+        raise exception
+
     finally:
         session.close()

@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QWidget,
-    QMessageBox,
 )
 from PyQt5.QtGui import QIcon
 
@@ -41,14 +40,8 @@ from controllers import (
 )
 
 from db.connection import create_tables
-from db.models.customers import Customer
-from db.models.employees import Employee
-from db.models.events import Event
-from db.models.ticket_types import TicketType
-from db.models.tickets import Ticket
 
 create_tables()
-
 
 class CreateOperationsWindow(QMainWindow):
     def __init__(self):
