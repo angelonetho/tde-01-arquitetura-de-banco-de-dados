@@ -10,6 +10,7 @@ from PyQt5.QtGui import QIcon
 import sys
 
 from controllers import (
+    authenticate_employee,
     create_ticket,
     delete_customer,
     delete_employee,
@@ -366,16 +367,24 @@ class MainWindow(QMainWindow):
         self.btn_read = QPushButton("Operações de Leitura")
         self.btn_update = QPushButton("Operações de Atualização")
         self.btn_delete = QPushButton("Operações de Exclusão")
+        self.btn_auth = QPushButton("Autenticação do Funcionário")
 
         self.btn_create.clicked.connect(self.handle_create)
         self.btn_read.clicked.connect(self.handle_read)
         self.btn_update.clicked.connect(self.handle_update)
         self.btn_delete.clicked.connect(self.handle_delete)
+        self.btn_auth.clicked.connect(self.handle_auth)
 
         layout.addWidget(self.btn_create)
         layout.addWidget(self.btn_read)
         layout.addWidget(self.btn_update)
         layout.addWidget(self.btn_delete)
+        layout.addWidget(self.btn_auth)
+
+        self.btn_create.setEnabled(False)
+        self.btn_read.setEnabled(False)
+        self.btn_update.setEnabled(False)
+        self.btn_delete.setEnabled(False)
 
         self.setMinimumSize(64 * 8, 6 * 8)
 
@@ -398,6 +407,18 @@ class MainWindow(QMainWindow):
     def handle_delete(self):
         self.delete_operations_window = DeleteOperationsWindow()
         self.delete_operations_window.show()
+
+    def handle_auth(self):
+        self.auth_window = authenticate_employee.AuthenticateEmployeeWindow()
+        self.auth_window.login_success.connect(self.unlock_buttons)
+        self.auth_window.show()
+
+    def unlock_buttons(self, employee):
+        if employee:
+            self.btn_create.setEnabled(True)
+            self.btn_read.setEnabled(True)
+            self.btn_update.setEnabled(True)
+            self.btn_delete.setEnabled(True)
 
 
 app = QApplication(sys.argv)
